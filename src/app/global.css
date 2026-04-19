@@ -1,0 +1,83 @@
+@import 'tailwindcss';
+@import 'fumadocs-ui/css/neutral.css';
+@import 'fumadocs-ui/css/preset.css';
+
+@theme {
+  /* Brand — light mode */
+  --color-brand: hsl(26, 73%, 51%);
+  --color-brand-foreground: white;
+  --color-brand-200: hsl(33, 100%, 50%);
+  --color-brand-secondary: #c6bb58;
+  --color-brand-secondary-foreground: #97890c;
+
+  /* Landing text — light mode */
+  --color-landing-foreground: #59592a;
+  --color-landing-foreground-200: #a8a866;
+  --color-landing-foreground-dark: #e4e2d0;
+}
+
+.dark {
+  --color-brand: #fff383;
+  --color-brand-foreground: black;
+  --color-brand-200: #fff7c8;
+  --color-brand-secondary: #fc7744;
+  --color-brand-secondary-foreground: #521700;
+
+  --color-landing-foreground: #e4e2d0;
+  --color-landing-foreground-200: #b7af7e;
+}
+
+/* .framework sets --color-fd-primary to amber (applied on <body> in layout.tsx) */
+:root {
+  --framework-color: hsl(41, 100%, 40%);
+}
+
+.dark {
+  --framework-color: #fff383;
+}
+
+.framework {
+  --color-fd-primary: var(--framework-color);
+  --color-fd-primary-foreground: white;
+}
+
+.dark .framework {
+  --color-fd-primary-foreground: black;
+}
+
+@keyframes fade-in-delayed {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes terminal-popup-in {
+  from {
+    opacity: 0;
+    transform: translateY(-2.5rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-terminal-popup {
+  animation: terminal-popup-in 300ms ease both;
+}
+
+html {
+  scrollbar-gutter: stable;
+}
+
+body {
+  background-color: var(--color-fd-background);
+}
+
+main {
+  @apply text-landing-foreground pt-4 pb-6 dark:text-landing-foreground-dark md:pb-12;
+}
+
+html > body[data-scroll-locked] {
+  margin-right: 0px !important;
+  --removed-body-scroll-bar-size: 0px !important;
+}

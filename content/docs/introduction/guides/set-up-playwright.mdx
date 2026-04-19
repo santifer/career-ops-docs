@@ -1,0 +1,138 @@
+---
+title: Set up Playwright
+description: Install and configure Playwright for browser automation.
+icon: Globe
+---
+
+This guide walks through three setup steps that give CareerOps its browser automation capabilities:
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    <Steps>
+      <Step title="Install the Playwright package">
+        Install the Playwright Node package
+      </Step>
+      <Step title="Download Chromium">
+        Download the Chromium browser Playwright controls
+      </Step>
+      <Step title="Configure the Playwright MCP">
+        Configure the Playwright MCP so Claude can operate the browser during the apply step
+      </Step>
+    </Steps>
+  </div>
+</div>
+
+<Callout title="Before you start">
+  Complete the [Quick Start](../quick-start.mdx) guide. Node.js 18 or later must be installed and you must be inside the CareerOps root folder.
+</Callout>
+
+---
+
+## Install the Playwright package
+
+Run `npm install` from the CareerOps root folder:
+
+```bash title="Terminal"
+npm install
+```
+
+This installs Playwright and all other project dependencies declared in `package.json`. Skip this step if you already ran it during initial setup.
+
+## Download Chromium
+
+Playwright needs its own copy of Chromium to automate. Download it by running:
+
+```bash title="Terminal"
+npx playwright install chromium
+```
+
+This is a one-time step. You do not need to repeat it after `npm` updates.
+
+## Configure the Playwright MCP
+
+The Playwright MCP lets Claude control the browser directly during the `/career-ops apply` step — navigating to job application forms, reading field labels, and suggesting answers.
+
+### Register the MCP server
+
+Run this command from anywhere to register the Playwright MCP with Claude Code:
+
+```bash title="Terminal"
+claude mcp add playwright npx @playwright/mcp@latest
+```
+
+This is the one-step registration method from the [Playwright MCP docs](https://playwright.dev/docs/getting-started-mcp). It writes the server entry to your Claude settings automatically.
+
+### Manual configuration (alternative)
+
+If you prefer to configure it by hand, add the following entry to `.claude/settings.local.json` in the CareerOps root, or your global Claude settings:
+
+```json title=".claude/settings.local.json"
+{
+  "mcpServers": {
+    "playwright": {
+      "command": "npx",
+      "args": ["y", "@playwright/mcp@latest"]
+    }
+  }
+}
+```
+
+Restart Claude Code after saving the file. CareerOps will then have access to `browser_navigate` and `browser_snapshot` during apply sessions.
+
+---
+
+## Verify the setup
+
+Run the doctor script to confirm all three components are in place:
+
+```bash title="Terminal"
+npm run doctor
+```
+
+Look for confirmation that Playwright, Chromium, and the MCP server are all ready. If the check passes, setup is complete.
+
+---
+
+## Watch the browser fill out the form
+
+By default, Playwright runs in headless mode — it reads and fills the form in the background without opening a visible window.
+
+To watch the browser open and fill out the form live, add an instruction to the apply command:
+
+<Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
+  <Tab value="Claude Code">
+    ```bash
+    /career-ops apply {company_name} open up with playwright the browser and fill out the entire form
+    ```
+  </Tab>
+  <Tab value="Codex">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="OpenCode">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+  <Tab value="Qwen CLI">
+    ```bash
+    Run the /career-ops apply command with the {company_name} argument. Then, use the Playwright MCP to open a browser window and fill out the entire form live.
+    ```
+  </Tab>
+</Tabs>
+
+Without that instruction, CareerOps still uses Playwright and the MCP — it just operates silently in the background.
+
+## What each component enables
+
+<div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
+  <div className="rounded-xl bg-fd-background p-3">
+    | Component          | Purpose                                                                                                           |
+    | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
+    | Playwright package | Core library that drives browser automation                                                                       |
+    | Chromium           | Renders pages, generates print-quality PDFs via `/career-ops pdf`, and checks whether job postings are still live |
+    | Playwright MCP     | Allows CareerOps to navigate forms and suggest field answers during `/career-ops apply`                           |
+  </div>
+</div>
+

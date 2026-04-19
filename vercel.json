@@ -1,0 +1,11 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "career-ops.dev" }],
+      "destination": "https://career-ops.org/:path*",
+      "permanent": true
+    }
+  ]
+}

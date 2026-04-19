@@ -1,0 +1,46 @@
+---
+title: What is Career Ops
+description: Introducing Career Ops, the open source career management tool.
+icon: CircleQuestionMark
+---
+
+Career Ops is an open source job search system that runs inside your AI coding assistant. You give it a job posting — a URL or raw text — and it reads the description, scores the role against your background, generates a tailored PDF resume, and logs everything to a local tracker. All of it happens in one command, without you touching a spreadsheet.
+
+It was built by [Santifer](https://x.com/santifer) to manage a real job search — 740+ offers evaluated, one Head of Applied AI role landed. He open sourced it so anyone could use the same system for free.
+
+## Philosophy
+
+### Open source, seriously
+
+Career Ops has no paid tier, no waitlist, and no account. You clone a repo, fill in a config file, and run it locally. Your CV, your profile, and your application history never leave your machine unless you push them somewhere yourself.
+
+The project grows through contributions. If you add a company portal scraper, improve the scoring logic, or fix a bug — that improvement ships to everyone. That is the whole model.
+
+<Callout title="Want to contribute?">
+  Read the [contributing guide](https://github.com/santifer/career-ops/blob/main/CONTRIBUTING.md) before opening a pull request. The short version: open an issue first to discuss the change, then submit your PR. The maintainers review quickly.
+</Callout>
+
+### AI-native and agnostic
+
+Career Ops does not ship its own AI. It runs as a set of slash commands and prompt files inside whichever AI coding CLI you already use — Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI. The AI does the reasoning; Career Ops gives it the structure, the context, and the tools.
+
+This means you are not locked in. If a better model ships next month, you switch your CLI and Career Ops runs on top of it unchanged.
+
+## When to use Career Ops
+
+Career Ops is the right tool when you are running an active, structured job search — not casually browsing.
+
+It works best when you:
+
+- Have a CV you are happy with and want to tailor it per application without rewriting it manually every time
+- Are tracking multiple applications and want a single source of truth instead of a spreadsheet
+- Want to apply only to roles that actually fit, not everything that looks vaguely relevant
+- Are open to running commands in a terminal (you do not need to write code)
+
+It is probably not what you need if you are sending one or two applications and are done. The setup — cloning the repo, configuring your profile, adding your CV — takes about fifteen minutes. That investment pays off once you are evaluating more than a handful of roles.
+
+## What it is not
+
+Career Ops does not apply to jobs for you. It evaluates, scores, generates, and tracks — but every application is your decision. Nothing gets submitted without your approval.
+
+It is also not a resume builder or a LinkedIn optimizer. It is a pipeline. You bring the resume; Career Ops makes sure each version of it is tuned to the job in front of you.
