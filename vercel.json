@@ -9,6 +9,16 @@
       "has": [{ "type": "host", "value": "career-ops.dev" }],
       "destination": "https://career-ops.org/:path*",
       "permanent": true
+    },
+    {
+      "source": "/community",
+      "destination": "https://discord.gg/8pRpHETxa4",
+      "permanent": true
+    },
+    {
+      "source": "/repo",
+      "destination": "https://github.com/santifer/career-ops",
+      "permanent": true
     }
   ]
 }
