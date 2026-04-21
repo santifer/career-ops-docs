@@ -13,11 +13,16 @@
     {
       "source": "/community",
       "destination": "https://discord.gg/8pRpHETxa4",
-      "permanent": true
+      "permanent": false
     },
     {
       "source": "/repo",
       "destination": "https://github.com/santifer/career-ops",
+      "permanent": true
+    },
+    {
+      "source": "/twitter",
+      "destination": "https://twitter.com/santifer",
       "permanent": true
     }
   ]
