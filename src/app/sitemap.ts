@@ -1,0 +1,62 @@
+import { execSync } from 'node:child_process';
+import { statSync } from 'node:fs';
+import path from 'node:path';
+import type { MetadataRoute } from 'next';
+import { source } from '@/lib/source';
+
+export const revalidate = 3600;
+
+const SITE_URL = 'https://career-ops.org';
+const REPO_ROOT = path.resolve(process.cwd());
+
+// lastmod resolution chain:
+//   1. git log (real authored timestamp)
+//   2. fs.statSync mtime (survives Vercel shallow clones)
+//   3. build time fallback
+function lastModFor(relPath: string): Date {
+  try {
+    const iso = execSync(`git log -1 --format=%cI -- "${relPath}"`, {
+      cwd: REPO_ROOT,
+      encoding: 'utf8',
+      stdio: ['ignore', 'pipe', 'ignore'],
+    }).trim();
+    if (iso) return new Date(iso);
+  } catch {
+    /* fall through */
+  }
+  try {
+    return statSync(path.join(REPO_ROOT, relPath)).mtime;
+  } catch {
+    return new Date();
+  }
+}
+
+export default function sitemap(): MetadataRoute.Sitemap {
+  const entries: MetadataRoute.Sitemap = [
+    {
+      url: `${SITE_URL}/`,
+      lastModified: lastModFor('src/app/(home)/page.tsx'),
+    },
+  ];
+
+  for (const page of source.getPages()) {
+    // page.url already includes the /docs prefix via baseUrl in source.ts.
+    // Reconstruct MDX path from slugs:
+    //   []                                 -> content/docs/index.mdx
+    //   ['intro', 'what-is-career-ops']    -> content/docs/intro/what-is-career-ops.mdx
+    const mdxRel =
+      page.slugs.length === 0
+        ? 'content/docs/index.mdx'
+        : `content/docs/${page.slugs.join('/')}.mdx`;
+
+    entries.push({
+      url: `${SITE_URL}${page.url}`,
+      lastModified: lastModFor(mdxRel),
+    });
+  }
+
+  // priority and changefreq deliberately omitted — Google has ignored
+  // both since 2017, and emitting cargo-cult values is flagged as low
+  // signal by audit tools.
+  return entries;
+}
