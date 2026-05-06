@@ -71,8 +71,6 @@ async function getContributors(): Promise<Contributor[]> {
 const PRESS = {
   biEN: 'https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4',
   wiredGR: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
-  biDE: 'https://www.businessinsider.de/karriere/bewerbung/mein-ki-tool-scannt-700-job-anzeigen-so-half-es-mir-karriere-zu-machen/',
-  createOS: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
 };
 
 // Compatible AI coding CLIs. Logos from simpleicons.org (CC0) except
@@ -182,26 +180,6 @@ export default async function HomePage() {
             />
           </a>
         </div>
-        <p className="text-center text-xs text-fd-muted-foreground mt-6">
-          Also covered by{' '}
-          <a
-            href={PRESS.biDE}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            className="hover:text-fd-foreground hover:underline"
-          >
-            Business Insider DE
-          </a>
-          {' '}·{' '}
-          <a
-            href={PRESS.createOS}
-            target="_blank"
-            rel="noopener noreferrer nofollow"
-            className="hover:text-fd-foreground hover:underline"
-          >
-            Create OS
-          </a>
-        </p>
       </div>
 
       {/* Manifesto blockquote — canonical signature thesis in first person.
@@ -252,12 +230,11 @@ export default async function HomePage() {
             <Image
               src="/santiago-avatar.png"
               alt="Santiago Fernández de Valderrama"
-              width={36}
-              height={36}
+              width={44}
+              height={44}
               className="rounded-full"
             />
             <span>
-              —{' '}
               <a
                 href="https://santifer.io/about"
                 rel="me noreferrer noopener"
@@ -265,7 +242,7 @@ export default async function HomePage() {
               >
                 Santiago Fernández de Valderrama
               </a>
-              , after evaluating 740 job listings with career-ops
+              , 16-year operator and Head of Applied AI
             </span>
           </footer>
         </blockquote>
