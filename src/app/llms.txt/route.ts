@@ -3,7 +3,7 @@ import { llms } from 'fumadocs-core/source';
 
 export const revalidate = false;
 
-const preamble = `# CareerOps
+const preamble = `# career-ops
 
 > AI-powered job search command center. Open source, CLI-agnostic, runs locally on your machine.
 
@@ -13,7 +13,9 @@ Built by Santiago Fernández de Valderrama — Applied AI Operator. Bio and othe
 
 ## Manifesto
 
-Companies use AI to filter candidates. CareerOps lets candidates use AI to choose companies.
+Companies use AI to filter candidates. I just gave candidates AI to choose companies.
+
+— Santiago Fernández de Valderrama
 
 ## Community
 

@@ -1,6 +1,6 @@
 ---
 title: Apply For a Job
-description: Use CareerOps to fill out job applications with tailored answers based on your profile and desired role.
+description: Use career-ops to fill out job applications with tailored answers based on your profile and desired role.
 icon: FileInput
 ---
 
@@ -12,7 +12,7 @@ This guide walks through using `/career-ops apply` to fill out a job application
 
 ## Run the apply command
 
-Open your agentic CLI in the CareerOps root folder and type:
+Open your agentic CLI in the career-ops root folder and type:
 
 <Tabs items={["Claude Code", "Codex", "OpenCode", "Qwen CLI"]}>
   <Tab value="Claude Code">
@@ -43,10 +43,10 @@ For example:
 /career-ops apply Anthropic
 ```
 
-CareerOps finds the matching report in `reports/`, uses Playwright to open a browser window, and reads the form. It then generates an answer for every field — ready to copy and paste. You do not need to open the browser yourself.
+career-ops finds the matching report in `reports/`, uses Playwright to open a browser window, and reads the form. It then generates an answer for every field — ready to copy and paste. You do not need to open the browser yourself.
 
 <Callout title="Note">
-  If Playwright is not available, CareerOps falls back to WebFetch to read the form. See [Set up Playwright](./set-up-playwright.mdx) if you want to enable the full browser-based experience.
+  If Playwright is not available, career-ops falls back to WebFetch to read the form. See [Set up Playwright](./set-up-playwright.mdx) if you want to enable the full browser-based experience.
 </Callout>
 
 **If you run the command `/career-ops apply` without arguments**, the system prompts you to provide context manually:
@@ -54,10 +54,10 @@ CareerOps finds the matching report in `reports/`, uses Playwright to open a bro
   <div className="rounded-xl bg-fd-background p-3">
     | Option                    | How                                                                                      |
     | ------------------------- | ---------------------------------------------------------------------------------------- |
-    | Share a screenshot        | Take a screenshot of the form and share it in the chat. CareerOps reads images directly. |
+    | Share a screenshot        | Take a screenshot of the form and share it in the chat. career-ops reads images directly. |
     | Paste the questions       | Copy the form questions as text and paste them into the chat.                            |
-    | Name the company and role | Type the company name and job title. CareerOps searches `reports/` for the match.        |
-    | Share the application URL | Paste the URL and CareerOps navigates to the form.                                       |
+    | Name the company and role | Type the company name and job title. career-ops searches `reports/` for the match.        |
+    | Share the application URL | Paste the URL and career-ops navigates to the form.                                       |
   </div>
 </div>
 
@@ -111,13 +111,13 @@ Each answer is built from a specific part of your evaluation report:
 
 ## Submit the application
 
-Review every answer, then submit the form yourself. CareerOps does not click Submit.
+Review every answer, then submit the form yourself. career-ops does not click Submit.
 
 After submitting, confirm in the chat:
 
 > "Submitted."
 
-CareerOps will:
+career-ops will:
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
   <div className="rounded-xl bg-fd-background p-3">
@@ -137,7 +137,7 @@ CareerOps will:
   <div className="rounded-xl bg-fd-background p-3">
     | Score             | Next step                                                                                                                                                                                        |
     | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-    | **4.0 or higher** | Run `/career-ops contacto`. CareerOps finds a hiring manager or team member on LinkedIn and drafts an outreach message. Sending it before your application is reviewed improves your visibility. |
+    | **4.0 or higher** | Run `/career-ops contacto`. career-ops finds a hiring manager or team member on LinkedIn and drafts an outreach message. Sending it before your application is reviewed improves your visibility. |
     | **Any score**     | Run `/career-ops tracker` to see the current status of everything in your pipeline.                                                                                                              |
   </div>
 </div>

@@ -4,10 +4,14 @@ import { appName, gitConfig } from './shared';
 export function baseOptions(): BaseLayoutProps {
   return {
     nav: {
-      // JSX supported
-      title: appName,
+      title: (
+        <span>
+          {appName}
+          <span className="hidden md:inline text-brand font-normal">{', your career operations hub'}</span>
+        </span>
+      ),
       transparentMode: 'top',
-      enabled: true
+      enabled: true,
     },
     githubUrl: `https://github.com/${gitConfig.user}/${gitConfig.repo}`,
   };

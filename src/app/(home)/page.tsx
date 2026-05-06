@@ -1,9 +1,34 @@
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import { cva } from 'class-variance-authority';
 import { cn } from '@/lib/cn';
-import { HeartIcon, TerminalIcon } from 'lucide-react';
+import { TerminalIcon } from 'lucide-react';
 import { Hero, CreateAppAnimation, AgnosticBackground } from './page.client';
+import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
+export const metadata: Metadata = {
+  metadataBase: new URL('https://career-ops.org'),
+  title: 'career-ops — AI-powered job search command center',
+  description:
+    'Open source AI-powered job search system. Runs in your CLI on your machine. CLI-agnostic, MIT-licensed, local-first. Evaluate jobs, generate tailored CVs, track applications.',
+  alternates: { canonical: 'https://career-ops.org' },
+  openGraph: {
+    type: 'website',
+    url: 'https://career-ops.org',
+    siteName: 'career-ops',
+    title: 'career-ops — AI-powered job search command center',
+    description:
+      'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    site: '@santifer',
+    creator: '@santifer',
+    title: 'career-ops — AI-powered job search command center',
+    description:
+      'Open source AI-powered job search system. Runs in your CLI. CLI-agnostic, MIT, local-first.',
+  },
+};
 
 const buttonVariants = cva(
   'inline-flex justify-center px-5 py-3 rounded-full font-medium tracking-tight transition-colors',
@@ -28,9 +53,12 @@ type Contributor = {
 
 async function getContributors(): Promise<Contributor[]> {
   try {
-    const res = await fetch('https://api.github.com/repos/santifer/career-ops/contributors', {
-      next: { revalidate: 3600 },
-    });
+    const res = await fetch(
+      'https://api.github.com/repos/santifer/career-ops/contributors?per_page=12',
+      {
+        next: { revalidate: 3600 },
+      },
+    );
     if (!res.ok) return [];
     return res.json();
   } catch {
@@ -38,59 +66,230 @@ async function getContributors(): Promise<Contributor[]> {
   }
 }
 
+// Press article URLs (sourced via cv-santiago — canonical in santifer.io
+// Person.subjectOf JSON-LD).
+const PRESS = {
+  biEN: 'https://www.businessinsider.com/how-i-built-tool-filter-job-listings-landed-head-ai-2026-4',
+  wiredGR: 'https://wired.com.gr/article/to-ai-ergaleio-pou-fernei-epanastasi-ston-tropo-pou-psachnoume-douleia/',
+  biDE: 'https://www.businessinsider.de/karriere/bewerbung/mein-ki-tool-scannt-700-job-anzeigen-so-half-es-mir-karriere-zu-machen/',
+  createOS: 'https://www.youtube.com/watch?v=pDkAe5JbREk',
+};
+
+// Compatible AI coding CLIs. Logos from simpleicons.org (CC0) except
+// OpenCode which is sourced from opencode.ai/brand and simplified to a
+// monochrome-friendly mark. Order: alphabetical by display name.
+const CLIS = [
+  { name: 'Claude Code', src: '/clis/claude.svg' },
+  { name: 'Codex', src: '/clis/openai.svg' },
+  { name: 'Gemini CLI', src: '/clis/googlegemini.svg' },
+  { name: 'GitHub Copilot', src: '/clis/githubcopilot.svg' },
+  { name: 'OpenCode', src: '/clis/opencode.svg' },
+  { name: 'Qwen CLI', src: '/clis/qwen.svg' },
+];
+
 export default async function HomePage() {
   const contributors = await getContributors();
+
   return (
     <>
+      {/* Hero */}
       <div className="relative flex min-h-[600px] h-[70vh] max-h-[900px] border rounded-2xl overflow-hidden mx-auto w-full max-w-[1400px] bg-origin-border mt-4">
         <Hero />
         <Image
           src="/hero_image.png"
-          alt="hero-image"
+          alt="career-ops terminal interface showing the job pipeline tracker"
           width={1628}
           height={1044}
-          className="absolute top-[460px] left-[15%] max-w-[1400px] rounded-xl lg:top-[380px] block [animation:fade-in-delayed_700ms_ease_400ms_both]"
+          className="absolute top-[540px] left-[25%] max-w-[1400px] rounded-xl lg:top-[440px] block [animation:fade-in-delayed_700ms_ease_400ms_both] [mask-image:linear-gradient(to_right,transparent_0%,black_8%)]"
           priority
         />
         <div className="flex flex-col z-2 px-4 size-full md:p-12 max-md:items-center max-md:text-center">
-          <p className="mt-12 text-xs text-brand font-medium rounded-full p-2 border border-brand/50 w-fit">
-            Your career operations hub.
-          </p>
-          <h1 className="text-4xl my-8 leading-tight font-medium xl:text-5xl xl:mb-12">
+          {/* Visually prominent display copy — emotional hook. Not a heading
+              semantically; aria-hidden so screen readers skip directly to the
+              functional H1 below which carries the keyword-rich description.
+              Instrument Serif regular: same family as the manifesto italic
+              (voice coherence) but differentiated style so the cita keeps
+              its uniqueness. */}
+          <p
+            aria-hidden="true"
+            className={`${instrumentSerifRegular.className} text-5xl mt-12 mb-6 leading-[1.05] xl:text-7xl xl:mb-8`}
+          >
             You got the job,
             <br />
-            and it didn't cost you a <span className="text-brand">thing</span>.
+            and it didn&apos;t cost you a <span className="text-brand">thing</span>.
+          </p>
+          {/* Functional H1 — visually secondary but the one Google, ChatGPT,
+              Perplexity index. Carries the searchable description: 'AI-powered
+              job search', 'open source', 'CLI', 'local-first'. */}
+          <h1 className="mb-8 max-w-xl text-base font-normal text-fd-muted-foreground md:text-lg">
+            Open source AI-powered job search. Runs in your CLI. Your data, your machine.
           </h1>
           <div className="flex flex-row items-center gap-4 flex-wrap w-fit">
             <Link href="/docs" className={cn(buttonVariants(), 'max-sm:text-sm')}>
               Get Started
             </Link>
-            <Link href="/docs" className={cn(buttonVariants({ variant: 'secondary' }), 'max-sm:text-sm')}>
-              Contribute on GitHub
-            </Link>
+            <a
+              href="https://github.com/santifer/career-ops"
+              target="_blank"
+              rel="noreferrer noopener"
+              className={cn(buttonVariants({ variant: 'secondary' }), 'max-sm:text-sm')}
+            >
+              View source
+            </a>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 gap-10 mt-12 px-6 mx-auto w-full max-w-[1400px] md:px-12 lg:grid-cols-2 lg:mt-20">
-        <p className="text-2xl tracking-tight leading-snug font-light col-span-full md:text-3xl xl:text-4xl">
-          Turn any AI coding CLI into a full job search <span className="text-brand font-medium">command center</span>. Instead of <span className="text-brand font-medium">manually</span> tracking applications in a spreadsheet, you get an AI-powered pipeline that scan portals, generates tailored PDFs and tracks everything for you. It's like having a career coach for your job search, but <span className="text-brand font-medium">without the cost</span>.
+      {/* Press coverage — Tier 1 logos (WIRED + BI) + Tier 2 text-only secondary.
+          Logos served from /public/press/ (sourced from cv-santiago). Filter
+          forces monochrome regardless of original SVG colors: brightness(0)
+          for light mode, +invert for dark mode. */}
+      <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12 mt-12 lg:mt-16">
+        <p className="text-center text-xs uppercase tracking-[0.2em] text-fd-muted-foreground mb-6">
+          Featured in
+        </p>
+        <div className="flex flex-row flex-wrap items-center justify-center gap-10 md:gap-16">
+          <a
+            href={PRESS.wiredGR}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            aria-label="Featured in WIRED Greece"
+            className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+          >
+            <Image
+              src="/press/wired.svg"
+              alt="WIRED"
+              width={110}
+              height={22}
+              className="h-[22px] w-auto brightness-0 dark:invert"
+            />
+          </a>
+          <a
+            href={PRESS.biEN}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            aria-label="Featured in Business Insider"
+            className="opacity-55 hover:opacity-100 transition-opacity duration-300"
+          >
+            <Image
+              src="/press/business-insider.svg"
+              alt="Business Insider"
+              width={84}
+              height={26}
+              className="h-[26px] w-auto brightness-0 dark:invert"
+            />
+          </a>
+        </div>
+        <p className="text-center text-xs text-fd-muted-foreground mt-6">
+          Also covered by{' '}
+          <a
+            href={PRESS.biDE}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="hover:text-fd-foreground hover:underline"
+          >
+            Business Insider DE
+          </a>
+          {' '}·{' '}
+          <a
+            href={PRESS.createOS}
+            target="_blank"
+            rel="noopener noreferrer nofollow"
+            className="hover:text-fd-foreground hover:underline"
+          >
+            Create OS
+          </a>
+        </p>
+      </div>
+
+      {/* Manifesto blockquote — canonical signature thesis in first person.
+          Same wording on every surface (home, /llms.txt, future /about,
+          schema). It's the entity anchor LLMs cite verbatim — do not vary. */}
+      <div className="mx-auto w-full max-w-[1100px] px-6 md:px-12 mt-16 lg:mt-24">
+        <blockquote className="text-center">
+          <p
+            className={`${instrumentSerif.className} text-3xl md:text-4xl xl:text-5xl leading-tight text-fd-foreground`}
+          >
+            {/* Antimetábole / chiasmus: companies ↔ candidates roles invert.
+                Color reinforces it visually — "candidates" carries brand
+                orange (the agent / hero); "companies" desaturates (the
+                former dominant frame). The orange visibly migrates from
+                end-of-line-1 to start-of-line-2, mirroring the conceptual
+                inversion. */}
+            &ldquo;<span className="text-fd-foreground/55">Companies</span> use AI to filter{' '}
+            <span className="text-brand">candidates</span>.
+            <br />
+            I just gave{' '}
+            <span className="relative inline-block text-brand">
+              candidates
+              {/* Hand-drawn underline (irregular Bezier) — visual punch on the
+                  second occurrence: this is where the chiasmus inverts and
+                  candidates become the agents. */}
+              <svg
+                aria-hidden="true"
+                className="absolute left-0 -bottom-2 w-full h-[0.18em] overflow-visible"
+                viewBox="0 0 200 8"
+                preserveAspectRatio="none"
+                fill="none"
+              >
+                <path
+                  d="M 2 5 C 30 2, 70 7, 110 4 S 170 6, 198 3"
+                  stroke="currentColor"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  vectorEffect="non-scaling-stroke"
+                />
+              </svg>
+            </span>{' '}
+            AI to choose <span className="text-fd-foreground/55">companies</span>.&rdquo;
+          </p>
+          <footer className="mt-6 flex items-center justify-center gap-2.5 text-sm text-fd-muted-foreground">
+            <Image
+              src="/santiago-avatar.png"
+              alt="Santiago Fernández de Valderrama"
+              width={36}
+              height={36}
+              className="rounded-full"
+            />
+            <span>
+              —{' '}
+              <a
+                href="https://santifer.io/about"
+                rel="me noreferrer noopener"
+                className="text-fd-muted-foreground hover:text-fd-foreground hover:underline"
+              >
+                Santiago Fernández de Valderrama
+              </a>
+              , after evaluating 740 job listings with career-ops
+            </span>
+          </footer>
+        </blockquote>
+      </div>
+
+      <div className="grid grid-cols-1 gap-10 mt-16 lg:mt-24 px-6 mx-auto w-full max-w-[1400px] md:px-12 lg:grid-cols-2">
+        <p className="text-xl tracking-tight leading-snug font-light col-span-full md:text-2xl xl:text-3xl">
+          Turn any AI coding CLI into a full job search{' '}
+          <span className="text-brand font-medium">command center</span>. Instead of{' '}
+          <span className="text-brand font-medium">manually</span>{' '}tracking applications in a
+          spreadsheet, you get an AI-powered pipeline that scans portals, generates tailored PDFs
+          and tracks everything for you. It&apos;s like having a career coach for your job search,
+          but{' '}<span className="text-brand font-medium">without the cost</span>.
         </p>
 
         <div className="relative h-[400px] lg:h-[480px] rounded-2xl col-span-full overflow-hidden flex items-center justify-center p-4 md:p-8">
           <Image
             src="/buffalo-dither.png"
-            loading='lazy'
-            alt="hero-image"
+            loading="lazy"
+            alt=""
             width={1628}
             height={1044}
             className="absolute inset-0 size-full object-cover object-[80%_bottom] -z-1"
           />
           <div className="mx-auto w-full max-w-[800px] p-2 bg-fd-card text-fd-card-foreground border rounded-2xl shadow-lg">
             <div className="flex flex-row gap-2">
-              <h2 className="text-brand content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 rounded-xl text-sm">
+              <span className="text-brand content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 rounded-xl text-sm">
                 Try it out
-              </h2>
+              </span>
               <div className="flex-1 rounded-xl bg-fd-secondary border shadow-sm px-4 py-2 font-mono text-sm text-fd-muted-foreground">
                 git clone https://github.com/santifer/career-ops.git
               </div>
@@ -107,122 +306,162 @@ export default async function HomePage() {
           </div>
         </div>
 
+        {/* Feature grid — 4 cards forming a 2x2 in lg+: technical (AI-Native),
+            philosophical (Not spray), practical (45+ portals), human (Community). */}
         <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card relative flex flex-col overflow-hidden z-2 min-h-[340px]">
-          <h3 className="font-medium tracking-tight text-xl lg:text-2xl mb-6">
-            AI-Native & Agnostic
-          </h3>
-          <p className="mb-20">
-            Works with any coding CLI — Claude Code, Open Code, Gemini CLI, Codex, Qwen CLI, you name it.
+          <h2
+            className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
+          >
+            AI-Native &amp; Agnostic
+          </h2>
+          <p className="mb-6">
+            Works with any coding CLI — Claude Code, Codex, OpenCode, Gemini CLI, Qwen CLI, GitHub
+            Copilot. Built on the Open Agent Skill Standard.
           </p>
+          <div className="flex flex-row flex-wrap items-center gap-6 md:gap-7">
+            {CLIS.map((cli) => (
+              <Image
+                key={cli.name}
+                src={cli.src}
+                alt={cli.name}
+                title={cli.name}
+                width={28}
+                height={28}
+                className="size-7 brightness-0 dark:invert opacity-55 hover:opacity-100 transition-opacity duration-300"
+              />
+            ))}
+          </div>
           <AgnosticBackground />
         </div>
 
-        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card min-h-[340px]">
-          <h3 className="font-medium tracking-tight text-xl lg:text-2xl mb-6">
+        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-bl from-brand/10 via-transparent to-transparent min-h-[340px]">
+          <h2
+            className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
+          >
             Not spray-and-pray.
-          </h3>
+          </h2>
           <p className="mb-6">
-            The system refuses to recommend applying to anything scoring below 4.0 out of 5. Every evaluation is a hard filter — not a nudge.
+            The system refuses to recommend applying to anything scoring below 4.0 out of 5. Every
+            evaluation is a hard filter — not a nudge.
           </p>
-          <Link href="docs/introduction/what-is-career-ops" className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm')}>
+          <Link
+            href="/docs/introduction/what-is-career-ops"
+            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm')}
+          >
             Read our mission statement
           </Link>
         </div>
 
-
-        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card min-h-[340px] flex flex-col">
-          <h3 className="font-medium tracking-tight text-xl lg:text-2xl mb-6">
+        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-tr from-brand/10 via-transparent to-transparent min-h-[340px] flex flex-col">
+          <h2
+            className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
+          >
             45+ company portals. Zero manual searching.
-          </h3>
+          </h2>
           <p className="mb-6">
-            Pre-configured scrapers check career pages across 45+ companies and job aggregators on demand. Run <code className="font-mono text-brand">/career-ops scan</code> and get a ranked list back in minutes.
+            Pre-configured scrapers check career pages across 45+ companies and job aggregators on
+            demand. Run <code className="font-mono text-brand">/career-ops scan</code> and get a
+            ranked list back in minutes.
           </p>
-          <Link href="/docs" className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit')}>
+          <Link
+            href="/docs"
+            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit')}
+          >
             See all portals
           </Link>
         </div>
 
-        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card min-h-[340px] flex flex-col">
-          <h3 className="font-medium tracking-tight text-xl lg:text-2xl mb-6">
-            Your resume, rewritten for every job.
-          </h3>
-          <p className="mb-8">
-            Career Ops generates an ATS-optimized PDF tailored to each job description. Not a template swap — a reasoned rewrite based on what the employer actually asked for.
+        {/* Card 4 — community. Closes the 2x2 grid; gradient in the fourth
+            corner (top-left → to-br) so all four cards have distinct
+            personality without copy-paste. */}
+        <div className="rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card bg-gradient-to-br from-brand/10 via-transparent to-transparent min-h-[340px] flex flex-col">
+          <h2
+            className={`${instrumentSerifRegular.className} tracking-tight text-2xl lg:text-3xl mb-6`}
+          >
+            Shipped with the community.
+          </h2>
+          <p className="mb-6">
+            career-ops grows through pull requests from people running real job searches. Issues get
+            triaged in Discord, fixes ship the same week. You don&apos;t just use the tool — you
+            help shape what it becomes.
           </p>
-          <div className="mt-auto flex flex-col gap-2 @container mask-[linear-gradient(to_bottom,white,transparent)]">
-            {[
-              { role: 'Solutions Architect', note: 'Emphasized technical leadership; softened IC scope.' },
-              { role: 'Solutions Engineer', note: 'Highlighted customer-facing delivery; added pre-sales framing.' },
-              { role: 'Staff Engineer', note: 'Foregrounded cross-team influence over individual contribution.' },
-              { role: 'Engineering Manager', note: 'Reframed team-building stories; removed IC-heavy bullets.' },
-              { role: 'Head of Engineering', note: 'Led with org design; positioned prior startups as context.' },
-            ].map(({ role, note }) => (
-              <div key={role} className="flex flex-col text-sm gap-2 p-2 border border-dashed border-brand-secondary @lg:flex-row @lg:items-center last:@max-lg:hidden">
-                <p className="font-medium text-nowrap">{role}</p>
-                <p className="text-xs flex-1 text-fd-muted-foreground @lg:text-end">{note}</p>
-              </div>
+          <Link
+            href="/community"
+            className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm w-fit')}
+          >
+            Join 2,500+ builders in Discord
+          </Link>
+        </div>
+
+        {/* 100% Open-Source — community/identity moment. Frameless + open
+            prose to differentiate from the contained feature cards above
+            and from the contained CTA panel below. */}
+        <div className="col-span-full mt-16 lg:mt-24 py-8 lg:py-10 flex flex-col items-center text-center gap-6">
+          <h2
+            className={`${instrumentSerifRegular.className} tracking-tight text-4xl lg:text-5xl text-brand`}
+          >
+            100% Open-Source.
+          </h2>
+          <p className="max-w-2xl text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
+            Built by{' '}
+            <a
+              href="https://santifer.io/about"
+              target="_blank"
+              rel="me noreferrer noopener"
+              className="text-fd-foreground font-medium hover:underline"
+            >
+              Santiago Fernández de Valderrama
+            </a>{' '}
+            after evaluating 740 job listings. Now powered by the community.
+          </p>
+
+          <div className="flex flex-row flex-wrap items-center justify-center mt-2">
+            {contributors.map((contributor, i) => (
+              <a
+                key={contributor.login}
+                href={contributor.html_url}
+                target="_blank"
+                rel="noreferrer noopener"
+                className="size-10 overflow-hidden rounded-full border-4 border-fd-background bg-fd-background -mr-3 md:size-12"
+                style={{ zIndex: contributors.length - i }}
+              >
+                <Image
+                  src={contributor.avatar_url}
+                  alt={contributor.login}
+                  width={48}
+                  height={48}
+                  className="size-full object-cover"
+                />
+              </a>
             ))}
           </div>
+
+          <a
+            href="https://github.com/santifer/career-ops/graphs/contributors"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="text-sm text-fd-muted-foreground hover:text-fd-foreground hover:underline"
+          >
+            Meet our contributors →
+          </a>
         </div>
+      </div>
 
-        <div className="font-medium tracking-tight text-3xl lg:text-4xl mt-8 text-brand text-center mb-4 col-span-full">
-          100% Open-Source.
-        </div>
-
-        <div className="col-span-full rounded-2xl text-sm p-6 bg-origin-border shadow-lg border bg-fd-card">
-          <div className="max-w-3xl flex flex-col">
-            <HeartIcon className="text-pink-500 mb-4 size-6" fill="currentColor" />
-            <h3 className="font-medium tracking-tight text-xl lg:text-2xl mb-6">Built from the job search trenches.</h3>
-            <p className="mb-8">
-              CareerOps was created by{' '}
-              <a href="https://santifer.io/about" target="_blank" rel="me noreferrer noopener" className="text-brand font-medium hover:underline">
-                Santiago Fernández de Valderrama
-              </a>{' '}
-              to evaluate over 740 job offers and land a Head of Applied AI role. He decided to open source it — now it&apos;s powered by passion and the open source community.
-            </p>
-            <div className="mb-8 flex flex-row items-center gap-2">
-              <a
-                href="https://github.com/santifer/career-ops"
-                target="_blank"
-                rel="noreferrer noopener"
-                className={cn(buttonVariants(), 'text-sm')}
-              >
-                Contribute on GitHub
-              </a>
-              <a
-                href="https://github.com/santifer/career-ops/graphs/contributors"
-                target="_blank"
-                rel="noreferrer noopener"
-                className={cn(buttonVariants({ variant: 'secondary' }), 'text-sm')}
-              >
-                Contributors
-              </a>
-            </div>
-          </div>
-
-          <div className="flex flex-col items-start gap-4">
-            <div className="flex flex-row flex-wrap items-center">
-              {contributors.map((contributor, i) => (
-                <a
-                  key={contributor.login}
-                  href={contributor.html_url}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  className="size-10 overflow-hidden rounded-full border-4 border-fd-background bg-fd-background -mr-3 md:size-12"
-                  style={{ zIndex: contributors.length - i }}
-                >
-                  <Image
-                    src={contributor.avatar_url}
-                    alt={contributor.login}
-                    width={48}
-                    height={48}
-                    className="size-full object-cover"
-                  />
-                </a>
-              ))}
-            </div>
-            <p className="text-xs text-fd-muted-foreground">Meet our contributors.</p>
-          </div>
+      {/* Final CTA — contained brand panel. Distinguishes itself from the
+          frameless community section above with a more saturated brand
+          gradient, a brand-tinted border, larger rounded corners, and
+          generous padding. The contrast between "open prose moment" and
+          "contained action moment" creates a deliberate rhythm. */}
+      <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12 mt-16 lg:mt-24">
+        <div className="rounded-3xl border border-brand/20 bg-gradient-to-br from-brand/15 via-brand/5 to-transparent p-12 lg:p-20 text-center">
+          <p
+            className={`${instrumentSerifRegular.className} text-3xl md:text-4xl xl:text-5xl tracking-tight mb-8`}
+          >
+            Ready to filter offers, not get filtered?
+          </p>
+          <Link href="/docs" className={cn(buttonVariants(), 'text-base px-8 py-3.5')}>
+            Get Started
+          </Link>
         </div>
       </div>
     </>

@@ -4,7 +4,7 @@ description: Install and configure Playwright for browser automation.
 icon: Globe
 ---
 
-This guide walks through three setup steps that give CareerOps its browser automation capabilities:
+This guide walks through three setup steps that give career-ops its browser automation capabilities:
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
   <div className="rounded-xl bg-fd-background p-3">
@@ -23,14 +23,14 @@ This guide walks through three setup steps that give CareerOps its browser autom
 </div>
 
 <Callout title="Before you start">
-  Complete the [Quick Start](../quick-start.mdx) guide. Node.js 18 or later must be installed and you must be inside the CareerOps root folder.
+  Complete the [Quick Start](../quick-start.mdx) guide. Node.js 18 or later must be installed and you must be inside the career-ops root folder.
 </Callout>
 
 ---
 
 ## Install the Playwright package
 
-Run `npm install` from the CareerOps root folder:
+Run `npm install` from the career-ops root folder:
 
 ```bash title="Terminal"
 npm install
@@ -64,7 +64,7 @@ This is the one-step registration method from the [Playwright MCP docs](https://
 
 ### Manual configuration (alternative)
 
-If you prefer to configure it by hand, add the following entry to `.claude/settings.local.json` in the CareerOps root, or your global Claude settings:
+If you prefer to configure it by hand, add the following entry to `.claude/settings.local.json` in the career-ops root, or your global Claude settings:
 
 ```json title=".claude/settings.local.json"
 {
@@ -77,7 +77,7 @@ If you prefer to configure it by hand, add the following entry to `.claude/setti
 }
 ```
 
-Restart Claude Code after saving the file. CareerOps will then have access to `browser_navigate` and `browser_snapshot` during apply sessions.
+Restart Claude Code after saving the file. career-ops will then have access to `browser_navigate` and `browser_snapshot` during apply sessions.
 
 ---
 
@@ -122,7 +122,7 @@ To watch the browser open and fill out the form live, add an instruction to the 
   </Tab>
 </Tabs>
 
-Without that instruction, CareerOps still uses Playwright and the MCP — it just operates silently in the background.
+Without that instruction, career-ops still uses Playwright and the MCP — it just operates silently in the background.
 
 ## What each component enables
 
@@ -132,7 +132,7 @@ Without that instruction, CareerOps still uses Playwright and the MCP — it jus
     | ------------------ | ----------------------------------------------------------------------------------------------------------------- |
     | Playwright package | Core library that drives browser automation                                                                       |
     | Chromium           | Renders pages, generates print-quality PDFs via `/career-ops pdf`, and checks whether job postings are still live |
-    | Playwright MCP     | Allows CareerOps to navigate forms and suggest field answers during `/career-ops apply`                           |
+    | Playwright MCP     | Allows career-ops to navigate forms and suggest field answers during `/career-ops apply`                           |
   </div>
 </div>
 

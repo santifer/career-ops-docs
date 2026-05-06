@@ -1,4 +1,4 @@
-export const appName = 'CareerOps';
+export const appName = 'career-ops';
 export const docsRoute = '/docs';
 export const docsImageRoute = '/og/docs';
 export const docsContentRoute = '/llms.mdx/docs';

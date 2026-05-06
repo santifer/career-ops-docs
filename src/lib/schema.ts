@@ -12,7 +12,7 @@ export async function siteSchema() {
         '@type': 'WebSite',
         '@id': 'https://career-ops.org/#website',
         url: 'https://career-ops.org',
-        name: 'CareerOps',
+        name: 'career-ops',
         description:
           'AI-powered job search command center. Open source, CLI-agnostic, runs locally.',
         inLanguage: 'en',

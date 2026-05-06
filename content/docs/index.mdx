@@ -1,10 +1,10 @@
 ---
 title: Quick Start
-description: Getting Started with Career Ops
+description: Getting Started with career-ops
 icon: Rocket
 ---
 
-This guide walks you through setting up Career-Ops and running your first job evaluation. By the end, you will paste a job posting and get back a full report, a score, and a tailored PDF resume — all in one step.
+This guide walks you through setting up career-ops and running your first job evaluation. By the end, you will paste a job posting and get back a full report, a score, and a tailored PDF resume — all in one step.
 
 ## What you need before you start
 
@@ -20,7 +20,7 @@ You do not need to know how to code. You only need to be comfortable running com
       <Step>
       ### AI coding assistant
 
-      Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, or **[Qwen CLI](https://qwen.ai/qwencode)** — the AI coding assistant that runs this system. Career-Ops works with all of them. Log in before continuing.
+      Install **[Claude Code](https://claude.ai/code)**, **[Codex](https://developers.openai.com/codex/cli)**, **[OpenCode](https://opencode.ai/)**, or **[Qwen CLI](https://qwen.ai/qwencode)** — the AI coding assistant that runs this system. career-ops works with all of them. Log in before continuing.
       </Step>
       <Step>
         ### Node.js 18 or later
@@ -56,7 +56,7 @@ Install the required packages:
 npm install
 ```
 
-Install the browser that Career-Ops uses to generate PDF resumes:
+Install the browser that career-ops uses to generate PDF resumes:
 
 ```bash title="Terminal"
 npx playwright install chromium
@@ -76,7 +76,7 @@ The output tells you what is working and what is missing. Fix any issues it flag
 
 ## Step 3: Create your profile
 
-Your profile is a simple text file that tells the system who you are. Career-Ops uses it to score jobs against your background and preferences.
+Your profile is a simple text file that tells the system who you are. career-ops uses it to score jobs against your background and preferences.
 
 Copy the example profile to create your own:
 
@@ -103,7 +103,7 @@ You do not need to fill in every field right now. The required ones above are en
 
 ## Step 4: Add your CV
 
-Career-Ops reads your CV every time it evaluates a job. It uses your actual experience to check how well you match each role.
+career-ops reads your CV every time it evaluates a job. It uses your actual experience to check how well you match each role.
 
 Create a file called `cv.md` in the project's root folder. Paste your CV into it using plain text. Use this structure as a guide:
 
@@ -141,9 +141,9 @@ If you are not sure what to write, look at `examples/cv-example.md` in this proj
 
 In Step 3, you told the system who you are. This step tells it what kinds of jobs you are going for.
 
-Career-Ops uses a file called `modes/_profile.md` to understand your target roles. It reads this file every time it scores a job, so the evaluations match your actual goals — not someone else's.
+career-ops uses a file called `modes/_profile.md` to understand your target roles. It reads this file every time it scores a job, so the evaluations match your actual goals — not someone else's.
 
-The template that ships with Career-Ops includes example roles in AI and machine learning. If that is not your field, you will replace them with your own. Either way, you need to create the file first.
+The template that ships with career-ops includes example roles in AI and machine learning. If that is not your field, you will replace them with your own. Either way, you need to create the file first.
 
 Copy the template to create your personal file:
 
@@ -171,7 +171,7 @@ Now open `modes/_profile.md` in a text editor. The template has comments in it t
   </div>
 </div>
 
-Once this file exists, Career-Ops uses it for every evaluation going forward.
+Once this file exists, career-ops uses it for every evaluation going forward.
 
 
 ## Step 6: Open your AI assistant
@@ -241,11 +241,11 @@ Copy the link to any job posting and paste it directly into your CLI. For exampl
 
 If you do not have a URL, copy the full job description text and paste it into the chat.
 
-Career-Ops detects that you shared a job posting and runs the full pipeline automatically. This is called the **auto-pipeline**.
+career-ops detects that you shared a job posting and runs the full pipeline automatically. This is called the **auto-pipeline**.
 
 ## What happens next
 
-After you paste the job, Career-Ops does the following steps on its own:
+After you paste the job, career-ops does the following steps on its own:
 
 <div className="rounded-lg bg-radial-[at_bottom] from-blue-500/20 p-4 border bg-origin-border border-fd-primary/10 prose-no-margin dark:bg-black/20">
   <div className="rounded-xl bg-fd-background p-3">
@@ -278,7 +278,7 @@ After you paste the job, Career-Ops does the following steps on its own:
   </div>
 </div>
 
-The whole process takes about one to two minutes. When it finishes, Career Ops shows you the score and a summary of the report.
+The whole process takes about one to two minutes. When it finishes, career-ops shows you the score and a summary of the report.
 
 ## Reading your results
 
@@ -292,7 +292,7 @@ Open the report file in `reports/`. The filename follows the pattern `{number}-{
 - **Block E** — personalization notes for your application.
 - **Block F** — interview preparation with STAR stories tailored to this job.
 
-Your tailored PDF resume is in the `output/` folder. Review it before sending it anywhere. Career-Ops never submits anything without your approval.
+Your tailored PDF resume is in the `output/` folder. Review it before sending it anywhere. career-ops never submits anything without your approval.
 
 ## What to do next
 
