@@ -31,11 +31,10 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
                   Built by{' '}
                   <a
                     href="https://santifer.io/about"
-                    rel="me noreferrer noopener"
-                    title="Santiago Fernández de Valderrama"
+                    rel="me author noreferrer noopener"
                     className="text-fd-foreground hover:underline"
                   >
-                    santifer
+                    Santiago Fernández de Valderrama
                   </a>{' '}
                   · Open source · MIT
                 </p>
