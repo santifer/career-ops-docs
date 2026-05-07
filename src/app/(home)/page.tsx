@@ -9,6 +9,7 @@ import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { SubscribeForm } from '@/components/subscribe-form';
 import { CopyableCommand } from '@/components/copyable-command';
 import { getProjectStats } from '@/lib/stats';
+import { homeFaqSchema } from '@/lib/schema';
 
 // "43,204" → "43K+". Floor-rounding to the thousands keeps the number
 // honestly conservative (the live count is always at-or-above what we
@@ -101,6 +102,10 @@ export default async function HomePage() {
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(homeFaqSchema()) }}
+      />
       {/* Hero */}
       <div className="relative flex min-h-[600px] h-[70vh] max-h-[900px] border rounded-2xl overflow-hidden mx-auto w-full max-w-[1400px] bg-origin-border mt-4">
         <Hero />
