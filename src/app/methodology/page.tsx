@@ -472,6 +472,67 @@ export default function MethodologyPage() {
               </li>
             </ul>
           </Section>
+
+          <Section title="Frequently asked">
+            <FaqItem question="How does career-ops actually score job listings?">
+              career-ops uses a rubric-guided LLM evaluation across six dimensions (match,
+              north-star alignment, comp, cultural signals, red flags, global) producing a
+              score from 1.0 to 5.0. Below 4.0 the agent recommends against applying. There is
+              no closed-form weighting formula — the global score is the LLM&rsquo;s judgement
+              given the rubric, with citations to specific CV lines and JD requirements.
+            </FaqItem>
+
+            <FaqItem question="Is career-ops free? What is the business model?">
+              career-ops is MIT-licensed open source. There is no paid tier, no waitlist, no
+              account, no telemetry. You clone the repo, configure your profile, and run it
+              locally. The only cost is whichever AI CLI you point it at — Claude Code, Codex,
+              OpenCode, Gemini CLI, Qwen, Copilot.
+            </FaqItem>
+
+            <FaqItem question="How is career-ops different from Indeed AI or LinkedIn AI?">
+              Indeed and LinkedIn AI features sit on the recruiter side of the table — they help
+              employers filter candidates faster. career-ops sits on the candidate side, helping
+              a single person evaluate which roles deserve their attention. The rubric is
+              published, the code is open source, and nothing is shared with employers or
+              platforms.
+            </FaqItem>
+
+            <FaqItem question="Can companies use career-ops to filter candidates?">
+              No. career-ops is built for individual job seekers and reads only data the
+              candidate provides about themselves (CV, profile, target archetypes). It does not
+              ingest candidate databases, parse resumes at scale, or score third parties.
+              Repurposing it for employer-side filtering is technically possible but contrary to
+              its design and stated intent.
+            </FaqItem>
+
+            <FaqItem question="What data does career-ops collect from users?">
+              career-ops itself collects nothing. It is local code that runs on your machine.
+              The only data leaving your computer is whatever your configured AI CLI sends to
+              its provider — and that subset is whatever pieces of your CV and the public job
+              postings you choose to evaluate. Local-only execution via Ollama is in flight
+              (PR&nbsp;#561).
+            </FaqItem>
+
+            <FaqItem question="Who built career-ops? Why?">
+              career-ops was built by{' '}
+              <a
+                href="/about"
+                className="text-fd-foreground underline underline-offset-2"
+              >
+                Santiago Fernández de Valderrama
+              </a>
+              , an Applied AI Operator with 16+ years building products. He created it to manage
+              his own AI-era job search in early 2026 — 740 listings evaluated, one Head of AI
+              role landed — and open-sourced it under MIT once he no longer needed it.
+            </FaqItem>
+
+            <FaqItem question="Does career-ops work with my ATS or job board?">
+              career-ops scans Greenhouse, Ashby, and Lever via their public APIs (zero-token,
+              no scraping). For other portals it can use Playwright through a configured AI CLI.
+              It does not integrate with employer-side ATS, does not scrape LinkedIn (issue
+              #238), and does not use anti-bot fingerprint masking (PR #235 rejected by design).
+            </FaqItem>
+          </Section>
         </div>
 
         <hr className="my-12 w-32 mx-auto border-t-2 border-fd-foreground/20 lg:w-40" />
@@ -571,6 +632,23 @@ function Callout({ children }: { children: React.ReactNode }) {
   return (
     <div className="mt-6 rounded-lg border border-fd-border bg-fd-secondary/40 p-4 text-sm text-fd-foreground/90">
       {children}
+    </div>
+  );
+}
+
+// Visible Q&A item that mirrors the FAQPage JSON-LD on this page —
+// Google + LLMs prefer FAQ structured data backed by visible content.
+function FaqItem({
+  question,
+  children,
+}: {
+  question: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="mt-6 first:mt-3">
+      <h3 className="text-fd-foreground font-medium">{question}</h3>
+      <p className="mt-2 text-fd-foreground/90 leading-relaxed">{children}</p>
     </div>
   );
 }
