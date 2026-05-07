@@ -8,6 +8,15 @@ import { Hero, CreateAppAnimation, AgnosticBackground } from './page.client';
 import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
 import { SubscribeForm } from '@/components/subscribe-form';
 import { CopyableCommand } from '@/components/copyable-command';
+import { getProjectStats } from '@/lib/stats';
+
+// "43,204" → "43K+". Floor-rounding to the thousands keeps the number
+// honestly conservative (the live count is always at-or-above what we
+// show), and the `+` carries momentum without inflating.
+function formatK(n: number): string {
+  if (n < 1000) return n.toLocaleString('en-US');
+  return `${Math.floor(n / 1000)}K+`;
+}
 export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
   title: 'career-ops — AI-powered job search command center',
@@ -88,7 +97,7 @@ const CLIS = [
 ];
 
 export default async function HomePage() {
-  const contributors = await getContributors();
+  const [contributors, stats] = await Promise.all([getContributors(), getProjectStats()]);
 
   return (
     <>
@@ -430,11 +439,28 @@ export default async function HomePage() {
             prose to differentiate from the contained feature cards above
             and from the contained CTA panel below. */}
         <div className="col-span-full mt-16 lg:mt-24 py-8 lg:py-10 flex flex-col items-center text-center gap-6">
-          <h2
-            className={`${instrumentSerifRegular.className} tracking-tight text-4xl lg:text-5xl text-brand`}
-          >
-            100% Open-Source.
-          </h2>
+          {/* Heading + dek pair — editorial pattern (NYT/Atlantic). The
+              dek carries quantitative proof of the community embrace
+              (live from GitHub API, 1h ISR) without diluting the
+              identity statement above. tabular-nums keeps digits stable
+              across hover/refresh; soft separator and muted color keep
+              the hierarchy clearly subordinate. */}
+          <div className="flex flex-col items-center gap-2 lg:gap-3">
+            <h2
+              className={`${instrumentSerifRegular.className} tracking-tight text-4xl lg:text-5xl text-brand`}
+            >
+              100% Open-Source.
+            </h2>
+            <p
+              className={`${instrumentSerifRegular.className} text-2xl md:text-3xl tabular-nums tracking-tight text-fd-foreground/60`}
+            >
+              <span>{formatK(stats.stars)} stars</span>
+              <span aria-hidden="true" className="mx-3 text-fd-foreground/25">
+                ·
+              </span>
+              <span>{formatK(stats.forks)} forks</span>
+            </p>
+          </div>
           <p className="max-w-2xl text-fd-muted-foreground text-base lg:text-lg leading-relaxed">
             Built by{' '}
             <a
