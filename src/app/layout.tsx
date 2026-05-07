@@ -5,6 +5,7 @@ import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import { siteSchema } from '@/lib/schema';
 import { CoMark } from '@/components/co-mark';
+import { FooterSubscribeBlock } from '@/components/footer-subscribe-block';
 
 const inter = Inter({
   subsets: ['latin'],
@@ -20,56 +21,62 @@ export default async function Layout({ children }: LayoutProps<'/'>) {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
         />
         <RootProvider>{children}</RootProvider>
-        <footer className="border-t py-8 text-sm text-fd-muted-foreground">
-          <div className="mx-auto flex w-full max-w-[1400px] flex-col gap-4 px-6 md:flex-row md:items-center md:justify-between md:px-12">
-            <div className="flex items-center gap-2.5">
-              <CoMark size={20} />
-              <p>
-                Built by{' '}
+        <footer className="border-t text-sm text-fd-muted-foreground">
+          <div className="mx-auto w-full max-w-[1400px] px-6 md:px-12">
+            <FooterSubscribeBlock />
+            <div className="flex flex-col gap-4 py-6 md:flex-row md:items-center md:justify-between">
+              <div className="flex items-center gap-2.5">
+                <CoMark size={20} />
+                <p>
+                  Built by{' '}
+                  <a
+                    href="https://santifer.io/about"
+                    rel="me noreferrer noopener"
+                    title="Santiago Fernández de Valderrama"
+                    className="text-fd-foreground hover:underline"
+                  >
+                    santifer
+                  </a>{' '}
+                  · Open source · MIT
+                </p>
+              </div>
+              <nav className="flex flex-row flex-wrap gap-x-5 gap-y-2">
+                <a href="/docs" className="hover:text-fd-foreground hover:underline">
+                  Docs
+                </a>
                 <a
-                  href="https://santifer.io/about"
-                  rel="me noreferrer noopener"
-                  title="Santiago Fernández de Valderrama"
-                  className="text-fd-foreground hover:underline"
+                  href="https://github.com/santifer/career-ops"
+                  rel="noreferrer noopener"
+                  className="hover:text-fd-foreground hover:underline"
                 >
-                  santifer
-                </a>{' '}
-                · Open source · MIT
-              </p>
+                  GitHub
+                </a>
+                <a
+                  href="https://discord.gg/8pRpHETxa4"
+                  rel="noreferrer noopener"
+                  className="hover:text-fd-foreground hover:underline"
+                >
+                  Discord
+                </a>
+                <a
+                  href="https://www.linkedin.com/in/santifer/"
+                  rel="me noreferrer noopener"
+                  className="hover:text-fd-foreground hover:underline"
+                >
+                  LinkedIn
+                </a>
+                <a
+                  href="https://x.com/santifer"
+                  rel="me noreferrer noopener"
+                  className="hover:text-fd-foreground hover:underline"
+                >
+                  X
+                </a>
+                <a href="/privacy" className="hover:text-fd-foreground hover:underline">
+                  Privacy
+                </a>
+              </nav>
             </div>
-            <nav className="flex flex-row flex-wrap gap-x-5 gap-y-2">
-              <a href="/docs" className="hover:text-fd-foreground hover:underline">
-                Docs
-              </a>
-              <a
-                href="https://github.com/santifer/career-ops"
-                rel="noreferrer noopener"
-                className="hover:text-fd-foreground hover:underline"
-              >
-                GitHub
-              </a>
-              <a
-                href="https://discord.gg/8pRpHETxa4"
-                rel="noreferrer noopener"
-                className="hover:text-fd-foreground hover:underline"
-              >
-                Discord
-              </a>
-              <a
-                href="https://www.linkedin.com/in/santifer/"
-                rel="me noreferrer noopener"
-                className="hover:text-fd-foreground hover:underline"
-              >
-                LinkedIn
-              </a>
-              <a
-                href="https://x.com/santifer"
-                rel="me noreferrer noopener"
-                className="hover:text-fd-foreground hover:underline"
-              >
-                X
-              </a>
-            </nav>
           </div>
         </footer>
         <Analytics />

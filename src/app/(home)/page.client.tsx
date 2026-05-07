@@ -140,7 +140,7 @@ export function CreateAppAnimation(props: ComponentProps<'div'>) {
       {tick > timeWindowOpen && (
         <PipelineReadyWindow className="absolute bottom-5 right-4 z-10 animate-terminal-popup" />
       )}
-      <pre className="font-mono text-sm min-h-[240px]">
+      <pre className="font-mono text-sm min-h-[240px] whitespace-pre-wrap break-all">
         <code className="grid">{lines}</code>
       </pre>
     </div>

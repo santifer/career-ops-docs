@@ -6,6 +6,8 @@ import { cn } from '@/lib/cn';
 import { TerminalIcon } from 'lucide-react';
 import { Hero, CreateAppAnimation, AgnosticBackground } from './page.client';
 import { instrumentSerif, instrumentSerifRegular } from '@/lib/fonts';
+import { SubscribeForm } from '@/components/subscribe-form';
+import { CopyableCommand } from '@/components/copyable-command';
 export const metadata: Metadata = {
   metadataBase: new URL('https://career-ops.org'),
   title: 'career-ops — AI-powered job search command center',
@@ -191,7 +193,7 @@ export default async function HomePage() {
         <hr className="mx-auto w-32 lg:w-40 border-t-2 border-fd-foreground/20 mb-10 lg:mb-14" />
         <blockquote className="text-center">
           <p
-            className={`${instrumentSerif.className} text-3xl md:text-4xl xl:text-5xl leading-tight text-fd-foreground`}
+            className={`${instrumentSerif.className} text-2xl sm:text-3xl md:text-4xl xl:text-5xl leading-tight text-fd-foreground`}
           >
             {/* Antimetábole / chiasmus: companies ↔ candidates roles invert.
                 Color reinforces it visually — "candidates" carries brand
@@ -277,13 +279,14 @@ export default async function HomePage() {
 
           {/* Terminal box centered */}
           <div className="w-full max-w-[800px] p-2 bg-fd-card text-fd-card-foreground border rounded-2xl shadow-lg">
-            <div className="flex flex-row gap-2">
-              <span className="text-brand content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 rounded-xl text-sm">
+            <div className="flex flex-col sm:flex-row gap-2">
+              <span className="text-brand text-center sm:content-center font-mono font-bold uppercase border-2 border-brand/50 px-2 py-1 sm:py-0 rounded-xl text-sm self-start sm:self-auto">
                 Try it out
               </span>
-              <div className="flex-1 rounded-xl bg-fd-secondary border shadow-sm px-4 py-2 font-mono text-sm text-fd-muted-foreground">
-                git clone https://github.com/santifer/career-ops.git
-              </div>
+              <CopyableCommand
+                command="git clone https://github.com/santifer/career-ops.git"
+                className="flex-1 min-w-0"
+              />
             </div>
 
             <div className="relative bg-fd-secondary rounded-xl mt-2 border shadow-md">
@@ -475,6 +478,7 @@ export default async function HomePage() {
             Meet our contributors →
           </a>
         </div>
+
       </div>
 
       {/* Final CTA — full-bleed brand gradient. No card, no border, no
@@ -484,7 +488,7 @@ export default async function HomePage() {
           to 0 in global.css to make the colour land exactly at the
           hairline). The brand-orange button is the single saturated
           focal point; generous vertical padding carries the weight. */}
-      <section className="mt-16 lg:mt-24 py-20 lg:py-28 text-center px-6 bg-gradient-to-b from-transparent via-brand/5 to-brand/10">
+      <section className="mt-16 lg:mt-24 pt-20 lg:pt-28 pb-16 lg:pb-20 text-center px-6 bg-gradient-to-b from-transparent via-brand/5 to-brand/10">
         <p
           className={`${instrumentSerifRegular.className} text-3xl md:text-4xl xl:text-5xl tracking-tight mb-8 max-w-3xl mx-auto`}
         >
@@ -493,6 +497,22 @@ export default async function HomePage() {
         <Link href="/docs" className={cn(buttonVariants(), 'text-base px-8 py-3.5')}>
           Get Started
         </Link>
+
+        {/* Subordinate alternative for visitors not ready to install today.
+            Lives inside the gradient panel so it shares context with the
+            primary CTA — single closing moment, not two competing sections.
+            Visual weight ~25-30% of the install ask. The helper text under
+            the form mirrors the footer form's body verbatim (contractual
+            phrasing — kept identical cross-placement). */}
+        <div className="mt-16 lg:mt-20 max-w-md mx-auto">
+          <p className="text-sm text-fd-muted-foreground mb-4">Or follow what we ship.</p>
+          <SubscribeForm compact />
+          <p className="mt-3 text-xs text-fd-muted-foreground">
+            Release announcements and occasional updates.
+            <br />
+            Unsubscribe anytime.
+          </p>
+        </div>
       </section>
     </>
   );

@@ -3,7 +3,14 @@ import { appName, gitConfig } from './shared';
 import { NavStarChip } from '@/components/nav-star-chip';
 import { CoMark } from '@/components/co-mark';
 
-export function baseOptions(): BaseLayoutProps {
+type Options = {
+  // Drops the brand suffix and the star chip — used by the docs layout
+  // where Fumadocs renders the title in the narrow sidebar and the full
+  // home-style branding wraps awkwardly.
+  compact?: boolean;
+};
+
+export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps {
   return {
     nav: {
       title: (
@@ -11,13 +18,18 @@ export function baseOptions(): BaseLayoutProps {
           <CoMark size={32} />
           <span>
             {appName}
-            <span className="hidden md:inline text-brand font-normal">{', your career operations hub'}</span>
+            {!compact && (
+              <span className="hidden md:inline text-brand font-normal">
+                {', your career operations hub'}
+              </span>
+            )}
           </span>
         </span>
       ),
       // Persistent live star count chip on the right side of the navbar.
-      // Uses NavOptions.children slot from Fumadocs.
-      children: <NavStarChip />,
+      // Uses NavOptions.children slot from Fumadocs. Hidden in compact
+      // (docs sidebar) — too cramped there.
+      children: compact ? null : <NavStarChip />,
       transparentMode: 'top',
       enabled: true,
     },
