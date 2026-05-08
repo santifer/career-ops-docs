@@ -1,6 +1,7 @@
 import type { BaseLayoutProps } from 'fumadocs-ui/layouts/shared';
 import { appName, gitConfig } from './shared';
 import { CoMark } from '@/components/co-mark';
+import { instrumentSerifRegular } from './fonts';
 
 type Options = {
   // Drops the brand suffix — used by the docs layout where Fumadocs
@@ -15,10 +16,10 @@ export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps 
       title: (
         <span className="inline-flex items-center gap-2.5">
           <CoMark size={32} />
-          <span>
+          <span className={`${instrumentSerifRegular.className} font-normal text-lg tracking-tight`}>
             {appName}
             {!compact && (
-              <span className="hidden md:inline text-brand font-normal">
+              <span className="hidden md:inline text-brand">
                 {', your career operations hub'}
               </span>
             )}
