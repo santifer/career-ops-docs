@@ -207,6 +207,8 @@ export function methodologySchema() {
         about: { '@id': 'https://career-ops.org/#software' },
         mainEntityOfPage: 'https://career-ops.org/methodology',
         inLanguage: 'en',
+        articleSection: 'Methodology',
+        wordCount: 2000,
         keywords: DEFINED_TERMS.map((t) => t.name),
         image: {
           '@type': 'ImageObject',
@@ -310,7 +312,7 @@ export function homeFaqSchema() {
         name: 'Is career-ops free? What is the business model?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'career-ops is MIT-licensed open source with no paid tier, no waitlist, and no account. It runs locally; the only cost is whichever AI CLI you point it at.',
+          text: 'career-ops is MIT-licensed open source with no paid tier, no waitlist, no account, and no telemetry. You clone the repo, configure your profile, and run it locally on your own machine. The only cost is whichever AI CLI you point it at — Claude Code, Codex, OpenCode, Gemini CLI, Qwen, or Copilot. There is no other revenue model: no upsell, no enterprise tier, no data sale.',
         },
       },
       {
@@ -318,7 +320,7 @@ export function homeFaqSchema() {
         name: 'Who built career-ops?',
         acceptedAnswer: {
           '@type': 'Answer',
-          text: 'Santiago Fernández de Valderrama — Applied AI Operator. He built it during his own AI-era job search in early 2026 (740 listings evaluated, one Head of AI role landed) and open-sourced it under MIT.',
+          text: 'career-ops was built by Santiago Fernández de Valderrama — an Applied AI Operator with 16+ years building products, founder and operator of a Spanish phone-repair business (2009–2025) before exiting, and currently Head of Applied AI at Zinkee. He created career-ops in early 2026 to manage his own AI-era job search — 740 listings evaluated, one Head of AI role landed — and open-sourced it under MIT once he no longer needed it.',
         },
       },
     ],

@@ -421,7 +421,8 @@ export default function MethodologyPage() {
 
           <Section title="What&rsquo;s in flight">
             <p>
-              Transparency requires acknowledging the work in progress. As of 7 May 2026:
+              Transparency requires acknowledging the work in progress. As of{' '}
+              <time dateTime="2026-05-07">7 May 2026</time>:
             </p>
             <ul className="mt-3 list-disc space-y-2 pl-6">
               <li>
@@ -467,7 +468,8 @@ export default function MethodologyPage() {
                 >
                   #572
                 </a>{' '}
-                — agent-agnostic instruction file. Merged 5 May 2026.{' '}
+                — agent-agnostic instruction file. Merged{' '}
+                <time dateTime="2026-05-05">5 May 2026</time>.{' '}
                 <code>AGENTS.md</code> is now canonical (replacing per-CLI files).
               </li>
             </ul>

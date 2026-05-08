@@ -205,7 +205,7 @@ export default async function HomePage() {
           as an editorial pull-quote — pattern used by NYT, The Atlantic. */}
       <div className="mx-auto w-full max-w-[1100px] px-6 md:px-12 mt-16 lg:mt-24">
         <hr className="mx-auto w-32 lg:w-40 border-t-2 border-fd-foreground/20 mb-10 lg:mb-14" />
-        <blockquote className="text-center">
+        <blockquote className="text-center" cite="https://career-ops.org/methodology">
           <p
             className={`${instrumentSerif.className} text-2xl sm:text-3xl md:text-4xl xl:text-5xl leading-tight text-fd-foreground`}
           >

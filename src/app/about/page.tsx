@@ -102,7 +102,17 @@ export default function AboutPage() {
           <p>
             career-ops emerged from his own AI-era job search in early 2026 — 740 listings
             evaluated, one Head of Applied AI role landed. He open-sourced it under MIT when he
-            no longer needed it.
+            no longer needed it. An extended case study — timeline, metrics, decisions — lives
+            at{' '}
+            <a
+              href="https://santifer.io/career-ops"
+              target="_blank"
+              rel="noreferrer noopener"
+              className="text-fd-foreground underline underline-offset-2"
+            >
+              santifer.io/career-ops
+            </a>
+            .
           </p>
           <p>
             Featured in{' '}
