@@ -71,6 +71,25 @@
   animation: terminal-popup-in 300ms ease both;
 }
 
+/* CLI prompt cursor — hard-step blink (CRT-style), 1s cycle.
+   Used on the closing CTA "Your turn _" to evoke a terminal awaiting
+   the visitor's input. Hairline opacity pivot at 50% simulates a step
+   transition without losing sub-pixel rendering. */
+@keyframes cursor-blink {
+  0%, 50% { opacity: 1; }
+  50.01%, 100% { opacity: 0; }
+}
+
+.animate-cursor-blink {
+  animation: cursor-blink 1s infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-cursor-blink {
+    animation: none;
+  }
+}
+
 html {
   scrollbar-gutter: stable;
 }

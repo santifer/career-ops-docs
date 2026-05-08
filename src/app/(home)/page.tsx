@@ -536,7 +536,10 @@ export default async function HomePage() {
           Ready to filter offers, not get filtered?
         </p>
         <Link href="/docs" className={cn(buttonVariants(), 'text-base px-8 py-3.5')}>
-          Your turn
+          Your turn{' '}
+          <span aria-hidden="true" className="animate-cursor-blink font-mono">
+            _
+          </span>
         </Link>
 
         {/* Subordinate alternative for visitors not ready to install today.
