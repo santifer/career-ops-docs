@@ -16,7 +16,7 @@ export function baseOptions({ compact = false }: Options = {}): BaseLayoutProps 
       title: (
         <span className="inline-flex items-center gap-2.5">
           <CoMark size={32} />
-          <span className={`${instrumentSerifRegular.className} font-normal text-lg tracking-tight`}>
+          <span className={`${instrumentSerifRegular.className} font-normal text-2xl tracking-tight relative -top-[1px]`}>
             {appName}
             {!compact && (
               <span className="hidden md:inline text-brand">
